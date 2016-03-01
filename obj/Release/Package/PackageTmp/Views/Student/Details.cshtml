@@ -1,0 +1,61 @@
+﻿@model ContosoUniversity.Models.Student
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Student</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstMidName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstMidName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EnrollmentDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EnrollmentDate)
+        </dd>
+        @*All of this data is retrieved from the database automatically when it's needed. 
+            (In other words, you are using lazy loading here. You did not specify eager loading 
+            for the Courses navigation property, so the enrollments were not retrieved in the same 
+            query that got the students. Instead, the first time you try to access the Enrollments 
+            navigation property, a new query is sent to the database to retrieve the data.*@
+        <dt> @Html.DisplayNameFor(model => model.Enrollments) </dt>
+        <dd>
+            <table class="table">
+                <tr>
+                    <th>Course Title</th>
+                    <th>Grade</th>
+                </tr>
+                @foreach (var item in Model.Enrollments)
+                {
+                    <tr>
+                        <td> @Html.DisplayFor(modelItem => item.Course.Title) </td>
+                        <td> @Html.DisplayFor(modelItem => item.Grade) </td>
+                    </tr> }
+            </table>
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
